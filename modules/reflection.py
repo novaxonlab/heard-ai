@@ -1,66 +1,134 @@
-def build_reflection(emotion, behaviors, relationship):
+def build_reflection(emotion, behaviors, relationship, evidence=None):
     """
-    Creates internal guidance for Heard AI before generating a reply.
+    Heard AI Internal Reflection Engine
+
+    This is NOT shown to the user.
+
+    It tells Heard HOW to think before answering.
     """
 
-    reflection = []
+    thoughts = []
 
+    # -----------------------------
+    # First priority
+    # -----------------------------
+
+    thoughts.append(
+        "Understand the user's feelings before giving advice."
+    )
+
+    thoughts.append(
+        "Respond like a trusted friend, not a therapist."
+    )
+
+    # -----------------------------
     # Emotion
+    # -----------------------------
+
     if emotion == "sad":
-        reflection.append(
-            "The user seems emotionally hurt. Respond with warmth first."
+        thoughts.append(
+            "The user seems emotionally hurt."
+        )
+
+    elif emotion == "angry":
+        thoughts.append(
+            "The user is emotionally activated. Stay calm."
         )
 
     elif emotion == "anxious":
-        reflection.append(
-            "The user appears anxious. Help them slow down instead of feeding uncertainty."
+        thoughts.append(
+            "Reduce uncertainty instead of increasing it."
         )
 
     elif emotion == "overwhelmed":
-        reflection.append(
-            "The user feels emotionally overwhelmed. Keep the response calm and simple."
+        thoughts.append(
+            "Keep your answer simple and grounding."
         )
 
+    # -----------------------------
     # Behaviors
-    if "checking_behavior" in behaviors:
-        reflection.append(
-            "The user is repeatedly checking the other person. Encourage them to focus on themselves."
+    # -----------------------------
+
+    if "instagram_checking" in behaviors:
+        thoughts.append(
+            "The user may be seeking reassurance by checking the other person."
         )
 
-    if "self_neglect" in behaviors:
-        reflection.append(
-            "The user may be losing themselves in the relationship. Gently bring the conversation back to their own needs."
+    if "obsession" in behaviors:
+        thoughts.append(
+            "The user may be focusing too much on one person."
         )
 
-    if "overthinking" in behaviors:
-        reflection.append(
-            "Do not increase overthinking. Help simplify the situation."
+    if "waiting_for_text" in behaviors:
+        thoughts.append(
+            "Help the user regain control over their own day."
         )
 
+    if "privacy_violation" in behaviors:
+        thoughts.append(
+            "Kindly explain that invading privacy is unhealthy."
+        )
+
+    # -----------------------------
     # Relationship
+    # -----------------------------
+
     if "one_sided_effort" in relationship:
-        reflection.append(
-            "The effort appears one-sided. Validate the user's feelings without attacking the other person."
+        thoughts.append(
+            "The emotional investment appears unbalanced."
         )
 
     if "possible_breadcrumbing" in relationship:
-        reflection.append(
-            "Explain what breadcrumbing is in simple language if it helps the user understand the pattern."
+        thoughts.append(
+            "Explain breadcrumbing only if enough evidence exists."
         )
 
     if "possible_gaslighting" in relationship:
-        reflection.append(
-            "Point out that the behavior seems emotionally unhealthy if supported by the conversation."
+        thoughts.append(
+            "If the conversation supports it, explain why the behavior is unhealthy."
+        )
+
+    if "push_pull" in relationship:
+        thoughts.append(
+            "The relationship appears emotionally inconsistent."
         )
 
     if "self_worth_risk" in relationship:
-        reflection.append(
-            "Prioritize protecting the user's self-worth."
+        thoughts.append(
+            "Protect the user's self-worth above everything else."
         )
 
-    if not reflection:
-        reflection.append(
-            "Listen carefully before giving advice."
+    # -----------------------------
+    # Evidence
+    # -----------------------------
+
+    if evidence:
+        thoughts.append(
+            f"Evidence confidence: {evidence}"
         )
 
-    return "\n".join(reflection)
+    # -----------------------------
+    # Final reminders
+    # -----------------------------
+
+    thoughts.append(
+        "Never create fake hope."
+    )
+
+    thoughts.append(
+        "Never judge people after a single event."
+    )
+
+    thoughts.append(
+        "If repeated unhealthy behaviors exist, say so kindly."
+    )
+
+    thoughts.append(
+        "Help the user think clearly."
+    )
+
+    thoughts.append(
+        "Leave the user feeling calmer than before."
+    )
+
+    return "\n".join(thoughts)
