@@ -1,28 +1,105 @@
 def detect_behaviors(text):
     """
-    Kullanıcının davranış kalıplarını bulur.
+    Heard AI Behavior Detection v2
+
+    Finds emotional and relationship behavior patterns.
     """
 
     text = text.lower()
 
     behaviors = []
 
-    if "instagram" in text:
-        behaviors.append("instagram_checking")
+    # -------------------------
+    # Checking Behaviors
+    # -------------------------
 
-    if "profil" in text:
-        behaviors.append("profile_checking")
+    checking_words = [
+        "instagram",
+        "profil",
+        "story",
+        "hikaye",
+        "son görülme",
+        "çevrimiçi",
+        "online",
+        "hesabına baktım",
+        "profiline baktım",
+        "kaç kere baktım"
+    ]
 
-    if "mesaj" in text:
-        behaviors.append("waiting_for_text")
+    if any(word in text for word in checking_words):
+        behaviors.append("checking_behavior")
 
-    if "takıntı" in text:
-        behaviors.append("obsession")
+    # -------------------------
+    # Waiting
+    # -------------------------
 
-    if "sürekli" in text:
-        behaviors.append("repetitive_behavior")
+    waiting_words = [
+        "mesaj",
+        "yazmadı",
+        "neden yazmıyor",
+        "bekliyorum",
+        "geri döner mi",
+        "görmesine rağmen"
+    ]
 
-    if "telefonunu karıştırdım" in text:
+    if any(word in text for word in waiting_words):
+        behaviors.append("waiting_for_attention")
+
+    # -------------------------
+    # Overthinking
+    # -------------------------
+
+    overthinking_words = [
+        "acaba",
+        "ya",
+        "belki",
+        "çok düşünüyorum",
+        "kafamdan çıkmıyor",
+        "takıyorum"
+    ]
+
+    if any(word in text for word in overthinking_words):
+        behaviors.append("overthinking")
+
+    # -------------------------
+    # Self Neglect
+    # -------------------------
+
+    self_neglect_words = [
+        "kendimi unuttum",
+        "her şeyim o oldu",
+        "hayatım onun etrafında",
+        "onsuz yapamam"
+    ]
+
+    if any(word in text for word in self_neglect_words):
+        behaviors.append("self_neglect")
+
+    # -------------------------
+    # Jealousy
+    # -------------------------
+
+    jealousy_words = [
+        "kıskanıyorum",
+        "başkasıyla",
+        "eski sevgilisi",
+        "kimle konuşuyor"
+    ]
+
+    if any(word in text for word in jealousy_words):
+        behaviors.append("jealousy")
+
+    # -------------------------
+    # Privacy
+    # -------------------------
+
+    privacy_words = [
+        "telefonunu karıştırdım",
+        "şifresini biliyorum",
+        "hesabına girdim"
+    ]
+
+    if any(word in text for word in privacy_words):
         behaviors.append("privacy_violation")
 
     return behaviors

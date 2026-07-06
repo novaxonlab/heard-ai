@@ -1,7 +1,16 @@
 def detect_emotion(text):
     """
-    İlk sürüm: Basit duygu analizi.
-    Daha sonra bunu gerçek AI modeliyle değiştireceğiz.
+    Heard AI Emotion Detection v2
+
+    Returns:
+        sad
+        anxious
+        angry
+        happy
+        confused
+        hopeful
+        overwhelmed
+        neutral
     """
 
     text = text.lower()
@@ -11,43 +20,72 @@ def detect_emotion(text):
             "üzgün",
             "ağlıyorum",
             "kötüyüm",
-            "çok kötü",
             "yoruldum",
             "bittim",
-            "değersiz"
-        ],
-
-        "angry": [
-            "sinir",
-            "nefret",
-            "delirdim",
-            "aptal",
-            "gerizekalı"
+            "değersiz",
+            "canım çok yanıyor",
+            "kalbim kırıldı",
+            "üzülüyorum"
         ],
 
         "anxious": [
-            "ya",
             "acaba",
+            "ya yazmazsa",
+            "ya istemiyorsa",
             "takıyorum",
-            "kaygı",
             "stres",
-            "korkuyorum"
+            "kaygı",
+            "korkuyorum",
+            "sürekli düşünüyorum",
+            "kafama takıyorum",
+            "bekliyorum"
+        ],
+
+        "angry": [
+            "sinirliyim",
+            "nefret ediyorum",
+            "delirdim",
+            "çok sinirlendim",
+            "beni çıldırttı"
         ],
 
         "happy": [
             "çok mutluyum",
-            "harika",
+            "harika hissediyorum",
+            "çok sevindim",
             "iyi hissediyorum",
-            "sevindim"
+            "bugün güzel geçti"
+        ],
+
+        "confused": [
+            "anlamıyorum",
+            "kararsızım",
+            "kafam karışık",
+            "emin değilim",
+            "ne yapacağımı bilmiyorum"
+        ],
+
+        "hopeful": [
+            "belki düzelir",
+            "umut ediyorum",
+            "belki yazar",
+            "şans vermek istiyorum"
+        ],
+
+        "overwhelmed": [
+            "her şey üstüme geliyor",
+            "boğuluyorum",
+            "çok bunaldım",
+            "artık dayanamıyorum"
         ]
     }
 
     scores = {}
 
-    for emotion, words in emotions.items():
-        scores[emotion] = sum(word in text for word in words)
+    for emotion, keywords in emotions.items():
+        scores[emotion] = sum(1 for keyword in keywords if keyword in text)
 
-    if not any(scores.values()):
+    if max(scores.values()) == 0:
         return "neutral"
 
     return max(scores, key=scores.get)
